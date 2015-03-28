@@ -27,7 +27,7 @@ func root(c web.C, w http.ResponseWriter, r *http.Request) {
 	page.CurrentTemperature = getCurrentTemp()
 	page.IsHeating = isHeating()
 
-	tpl, err := pongo2.DefaultSet.FromFile("template.tpl")
+	tpl, err := pongo2.DefaultSet.FromFile("/etc/cooker/front/template.tpl")
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
@@ -48,7 +48,7 @@ func setTarget(c web.C, w http.ResponseWriter, r *http.Request) {
 
 	fmt.Println("Set " + target)
 	setTargetTemp(target)
-	http.Redirect(w, r, "/", http.StatusMovedPermanently)	// workaround to suppress transition page.
+	http.Redirect(w, r, "/", http.StatusMovedPermanently) // workaround to suppress transition page.
 }
 
 func forceOff(c web.C, w http.ResponseWriter, r *http.Request) {
