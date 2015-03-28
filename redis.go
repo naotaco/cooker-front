@@ -37,3 +37,8 @@ func isHeating() string {
 	client := getCookerRedisClient()
 	return client.Get("cooker_is_heating").String()
 }
+
+func setTargetTemp(t string) {
+	client := getCookerRedisClient()
+	client.Set("cooker_target_temperature", t)
+}

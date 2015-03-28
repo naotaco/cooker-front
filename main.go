@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"net/http"
+	"strconv"
 
 	"github.com/zenazn/goji"
 	"github.com/zenazn/goji/web"
@@ -34,8 +35,24 @@ func root(c web.C, w http.ResponseWriter, r *http.Request) {
 	tpl.ExecuteWriter(pongo2.Context{"page": page}, w)
 }
 
+func setTarget(c web.C, w http.ResponseWriter, r *http.Request) {
+	target := c.URLParams["target"]
+	fmt.Println(target)
+
+	t, err := strconv.ParseFloat(target, 32)
+	if err != nil || t < 0 || t > 100 {
+		// Invalid format or out of correct range
+		http.Redirect(w, r, "/", 400)
+		return
+	}
+
+	fmt.Println("Set " + target)
+	setTargetTemp(target)
+	http.Redirect(w, r, "/", 200)
+}
+
 func main() {
 	goji.Get("/", root)
+	goji.Get("/set/:target", setTarget)
 	goji.Serve()
-
 }
