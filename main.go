@@ -36,7 +36,7 @@ func root(c web.C, w http.ResponseWriter, r *http.Request) {
 }
 
 func setTarget(c web.C, w http.ResponseWriter, r *http.Request) {
-	target := c.URLParams["target"]
+	target := r.PostFormValue("target")
 	fmt.Println(target)
 
 	t, err := strconv.ParseFloat(target, 32)
@@ -63,8 +63,8 @@ func forceOn(c web.C, w http.ResponseWriter, r *http.Request) {
 
 func main() {
 	goji.Get("/", root)
-	goji.Get("/set/:target", setTarget)
-	goji.Get("/force_on", forceOn)
-	goji.Get("/force_off", forceOff)
+	goji.Post("/set", setTarget)
+	goji.Post("/force_on", forceOn)
+	goji.Post("/force_off", forceOff)
 	goji.Serve()
 }

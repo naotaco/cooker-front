@@ -1,6 +1,8 @@
 package main
 
 import (
+	"fmt"
+
 	"gopkg.in/redis.v2"
 )
 
@@ -39,6 +41,7 @@ func isHeating() string {
 }
 
 func setTargetTemp(t string) {
+	fmt.Println("set: " + t)
 	client := getCookerRedisClient()
 	client.Set("cooker_target_temperature", t)
 }
