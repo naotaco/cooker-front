@@ -17,10 +17,6 @@ type Page struct {
 	IsHeating          string
 }
 
-func hello(c web.C, w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "Hello, %s!", c.URLParams["name"])
-}
-
 func root(c web.C, w http.ResponseWriter, r *http.Request) {
 
 	var page Page
@@ -39,7 +35,6 @@ func root(c web.C, w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	goji.Get("/hello/:name", hello)
 	goji.Get("/", root)
 	goji.Serve()
 
