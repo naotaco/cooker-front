@@ -48,11 +48,23 @@ func setTarget(c web.C, w http.ResponseWriter, r *http.Request) {
 
 	fmt.Println("Set " + target)
 	setTargetTemp(target)
-	http.Redirect(w, r, "/", 200)
+	http.Redirect(w, r, "/", http.StatusMovedPermanently)	// workaround to suppress transition page.
+}
+
+func forceOff(c web.C, w http.ResponseWriter, r *http.Request) {
+	setTargetTemp("0.0")
+	http.Redirect(w, r, "/", http.StatusMovedPermanently)
+}
+
+func forceOn(c web.C, w http.ResponseWriter, r *http.Request) {
+	setTargetTemp("100.0")
+	http.Redirect(w, r, "/", http.StatusMovedPermanently)
 }
 
 func main() {
 	goji.Get("/", root)
 	goji.Get("/set/:target", setTarget)
+	goji.Get("/force_on", forceOn)
+	goji.Get("/force_off", forceOff)
 	goji.Serve()
 }
