@@ -3,8 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <title>{{ page.Title }}</title>
+    <script language="JavaScript"><!--
+				      function update(){
+				      location.reload();
+				      }
+				      // -->
+    </script>
 </head>
-<body>
+<body onLoad="setInterval('update()', 5000)">
     <div id="content">
         <h1 class="title">{{ page.Title }}</h1>
         <div class="body">
