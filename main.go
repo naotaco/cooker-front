@@ -21,13 +21,13 @@ type Page struct {
 func root(c web.C, w http.ResponseWriter, r *http.Request) {
 
 	var page Page
-	page.Title = "My Cooker"
-
 	page.TargetTemperature = getTargetTemp()
 	page.CurrentTemperature = getCurrentTemp()
 	page.IsHeating = isHeating()
+	page.Title = "Cooker " + fmt.Sprintf("%d/%d", int(page.CurrentTemperature), int(page.TargetTemperature))
+	
 
-	tpl, err := pongo2.DefaultSet.FromFile("/etc/cooker/front/template.tpl")
+	tpl, err := pongo2.DefaultSet.FromFile("/etc/cooker/cooker-front/template.tpl")
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
